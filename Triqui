@@ -1,0 +1,511 @@
+#include <conio.h>
+#include <graphics.h>
+#include <iostream>
+#include <windows.h>
+#include <vector>
+#include <cstdlib>
+#include<time.h>
+//#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<bool> pos(9,false);
+
+int matriz[3][3] = {-1};
+
+void interactuar(char r){
+cleardevice();
+    switch(r){
+    case 's': ;
+    break;
+    default:
+    break;
+    }
+}
+//----------------------------------------------------------------------------------------------
+void ganoelmejor(bool a){
+    closegraph();
+/////////////////
+initwindow(1150,600,"GANADOR",500,200);
+setbkcolor(COLOR(100,399,152));
+
+cleardevice();
+
+
+
+if(a == true){
+readimagefile("Imagenes/elmejor.jpg",0,0,1150,600); // colocar imagen
+//readimagefile("Imagenes/denuevo.jpg",775,400,400,200);
+
+}
+
+else if (a == false){
+readimagefile("Imagenes/GANE.jpg",0,0,1150,600); // colocar imagen
+
+}
+
+}
+
+void inicio(){
+
+initwindow(1150,600,"INICIO",500,200);
+cleardevice();
+readimagefile("Imagenes/1.jpg",0,0,1150,600);
+
+
+}
+
+//------------------------------------------------------- REGLAS -----------------------------------------
+
+int reglas(){ // reglas de la vida y de la muerte de triqui �ejeje
+int contv = 0; // contador verticals
+int conth= 0; // contador horizonatal
+
+int contvmachine = 0; // contador verticals maquina
+int conthmachine = 0; // contador horizonatal maquina
+
+ for(int i = 0; i < 3; i ++){
+
+        // esto evalua las diagonales
+    if(((matriz[2][0] == 2 && matriz[1][1] == 2 && matriz[0][2] == 2) || (matriz[0][0] == 2 && matriz[1][1] == 2 && matriz[2][2] == 2))){
+   cout<<"GANASTE , GENIAL"<<endl;
+  //  closegraph();
+  ganoelmejor(true);
+    return 1;
+   break;
+    }
+    if(((matriz[2][0] == 1 && matriz[1][1] == 1 && matriz[0][2] == 1) || (matriz[0][0] == 1 && matriz[1][1] == 1 && matriz[2][2] == 1))){
+    cout<<"GANE YO , MAS SUERTE A LA PROXIMA"<<endl;
+  //  closegraph();
+    ganoelmejor(false);
+    return 1;
+break;
+    }
+
+    for(int j  = 0; j <3; j++){
+        if (matriz[i][j] == 2){  // analiza los verticales humano
+            contv++;
+        }
+        if (matriz[j][i] == 2){  // analiza los horizontales humano
+            conth++;
+        }
+        ////////////////maquina /////////////////
+        if (matriz[i][j] == 1){  // analiza los verticales
+            contvmachine++;
+        }
+        if (matriz[j][i] == 1){  // analiza los horizontales
+            conthmachine++;
+        }
+        ////////////////EVALUA GANADOR ///////////////////
+        if(contv == 3 ||  conth == 3){ // cualquiera de las dos gana
+   cout<<"GANASTE , GENIAL"<<endl;
+  //  closegraph();
+ganoelmejor(true);
+return 1;
+        }
+        if(contvmachine == 3 ||  conthmachine == 3){ // cualquiera de las dos gana
+    cout<<"GANE YO , MAS SUERTE A LA PROXIMA"<<endl;
+   // closegraph();
+    ganoelmejor(false);
+    return 1;
+
+        }
+    }
+    contv = 0;
+    conth = 0;
+    contvmachine = 0;
+    conthmachine = 0;
+ }
+}
+//////////////////////////////////////////////////DADOS //////////////////
+
+void caras(int x, int xc1,int yc)
+{
+   // int xc1=100;
+   // int yc =200;
+    int xc2=600;
+
+
+    setcolor(WHITE);
+    bar(xc1,yc,xc1+300,yc+300);
+
+   // bar(xc2,yc,xc2+300,yc+300);
+
+   // int x = 6;
+    int trama;
+    trama = SOLID_FILL;
+    if(xc1 < 300){
+    setfillstyle( trama, BLACK );
+    }
+    else{
+        setfillstyle( trama, WHITE);
+    }
+
+    switch(x){
+case 1:
+    fillellipse(xc1+150,yc+150,30,30);  // uno
+break;
+case 2:
+    fillellipse(((300))/3 +xc1,((300))/3 +yc, 30,30);
+    fillellipse(((300)*2)/3 +xc1,((300*2))/3 +yc, 30,30);
+break;
+case 3:
+    fillellipse(((300))/3 +(xc1-30),((300))/3 +(yc-30), 30,30);
+    fillellipse(xc1+150,yc+150,30,30);
+    fillellipse(((300)*2)/3 +(xc1+30),((300*2))/3 +(yc+30), 30,30);
+break;
+case 4:
+    fillellipse(((300))/3 +xc1,((300))/3 +yc, 30,30);
+    fillellipse(((300)*2)/3 +xc1,((300*2))/3 +yc, 30,30);
+    fillellipse(((300)*2)/3 +xc1,((300))/3 +yc, 30,30);
+    fillellipse(((300))/3 +xc1,((300*2))/3 +yc, 30,30);
+break;
+case 5:
+    fillellipse(((300))/3 +(xc1-30),((300))/3 +(yc-30), 30,30);
+    fillellipse(((300)*2)/3 +(xc1+30),((300))/3 +(yc-30), 30,30);
+    fillellipse(((300)*2)/3 +(xc1+30),((300)*2)/3 +(yc+30), 30,30);
+    fillellipse(((300))/3 +(xc1-30),((300*2))/3 +(yc+30), 30,30);
+    fillellipse(xc1+150,yc+150,30,30);
+break;
+case 6:
+    fillellipse(((300))/3 +(xc1-30),((300))/3 +(yc-30), 30,30);
+    fillellipse(((300)*2)/3 +(xc1+30),((300))/3 +(yc-30), 30,30);
+    fillellipse(((300)*2)/3 +(xc1+30),((300)*2)/3 +(yc+30), 30,30);
+    fillellipse(((300))/3 +(xc1-30),((300*2))/3 +(yc+30), 30,30);
+    fillellipse(xc1+70,yc+150,30,30);
+    fillellipse(xc1+230,yc+150,30,30);
+break;
+}
+getch();
+}
+
+bool dados(){
+char r;
+srand(time(0));
+int a = 1;   // Dado mio
+int a2 = 0;  // Dado maquina
+
+initwindow(1000,600,"Dados",500,200);
+//setbkcolor(COLOR(100,399,152))
+cleardevice();
+readimagefile("Imagenes/dado.jpg",0,0,1000,600);
+
+cout<<"Listo para tirar los dados? Presiona alguna tecla para empezar por el tuyo ... "<<endl;
+cout<<"Si quedamos empatados yo gano porque soy local"<<endl;
+r = getch();
+delay(15);
+cout<<" El primer dado salio : "<<endl;
+a = rand()%6 +1;
+caras(a,100,200);
+cout<<" El Segundo dado es : "<<endl;
+srand(time(0));
+a2 = rand()%6 +1;
+caras(a2,600,200);
+
+if(a> a2){
+return true;  //true humano
+closegraph();
+}
+else{
+    return false;  // false maquina porque es falsa
+closegraph();
+}
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////// CIRCULOS DELTRIQUI ///////////////////
+
+
+
+void Ciculo(int x, int y){ /////////////ciruclito para el humano
+   int trama, color;
+   trama = SOLID_FILL;
+   color = 7;
+   setfillstyle( trama, color );
+
+   fillellipse( x, y, 80, 80 );
+}
+void equis(int x, int y){ // simbolo del pc
+   int trama, color;
+   trama = SOLID_FILL;
+   color = 2;
+   setfillstyle( trama, color );
+
+   fillellipse( x, y, 80, 80 );
+
+}
+
+void turno(int tiro){
+switch (tiro) {
+case 1:
+    Ciculo(300,200);
+    pos[0] = true;
+    matriz[0][0] = 2;      // para decir que ya se uso
+break;
+case 2:
+    Ciculo(500,200);
+    pos[1] = true;
+    matriz[1][0] = 2;
+break;
+case 3:
+    Ciculo(700,200);
+    pos[2] = true;
+    matriz[2][0] = 2;
+break;
+case 4:
+    Ciculo(300,400);
+    pos[3] = true;
+    matriz[0][1] = 2;
+break;
+case 5:
+    Ciculo(500,400);
+    pos[4] = true;
+    matriz[1][1] = 2;
+break;
+case 6:
+    Ciculo(700,400);
+    pos[5] = true;
+    matriz[2][1] = 2;
+break;
+case 7:
+    Ciculo(300,600);
+    pos[6] = true;
+    matriz[0][2] = 2;
+break;
+case 8:
+    Ciculo(500,600);
+    pos[7] = true;
+    matriz[1][2] = 2;
+break;
+case 9:
+    Ciculo(700,600);
+    pos[8] = true;
+    matriz[2][2] = 2;
+
+break;
+}
+}
+
+
+void turnoM(int tiro){   // Los switch case son para colocar los simbolitos
+switch (tiro) {
+case 1:
+    equis(300,200);
+    pos[0] = true;
+    matriz[0][0] = 1;
+break;
+case 2:
+    equis(500,200);
+    pos[1] = true;
+    matriz[1][0] = 1;
+break;
+case 3:
+    equis(700,200);
+    pos[2] = true;
+    matriz[2][0] = 1;
+break;
+case 4:
+    equis(300,400);
+    pos[3] = true;
+    matriz[0][1] = 1;
+break;
+case 5:
+    equis(500,400);
+    pos[4] = true;
+    matriz[1][1] = 1;
+break;
+case 6:
+    equis(700,400);
+    pos[5] = true;
+    matriz[2][1] = 1;
+break;
+case 7:
+    equis(300,600);
+    pos[6] = true;
+    matriz[0][2] = 1;
+break;
+case 8:
+    equis(500,600);
+    pos[7] = true;
+    matriz[1][2] = 1;
+break;
+case 9:
+    equis(700,600);
+    pos[8] = true;
+    matriz[2][2] = 1;
+break;
+}
+}
+int teclado(char r){  // para que me lea cosas de teclado, en casos
+int aux;
+
+switch(r){
+case '1':
+    aux =1 ;
+break;
+case '2':
+    aux =2 ;
+break;
+case '3':
+    aux =3;
+break;
+case '4':
+    aux = 4;
+break;
+case '5':
+    aux = 5;
+break;
+case '6':
+    aux = 6;
+break;
+case '7':
+    aux = 7;
+break;
+case '8':
+    aux = 8;
+break;
+case '9':
+    aux = 9;
+break;
+default:
+
+break;
+}
+return aux;
+}
+void tirarH(){   ///////////Tirar humano
+    char r;
+    cout<<"JUGADOR 1 TIRA: "<<endl;
+    int ala;
+    do{
+    r = getch();
+    ala = teclado(r);
+      // lee la posicion// verifica si esta o no ocupado
+    cout<<"El espacio ya esta ocupado"<<endl;
+
+    }while(pos[ala-1]==true);
+         pos[ala-1]==true;   /////para ocupar ya el espacio
+         turno(ala); // lo lee
+}
+
+int tirarM(){  // Tirar maquina
+int aux = 0;
+srand(time(NULL));
+    do{      // verifica si esta o no ocupado
+    aux =rand()%8+1;
+
+    }while(pos[aux-1]==true);  //si estan usados se replantea otro numero random
+         pos[aux-1]==true;
+         turnoM(aux);
+
+return aux;
+}
+//////////////////////////////////////////////////////// INTERFAZ JUEGO ////////////////////////////////////
+void juego(bool sociedad){
+setbkcolor(4);
+cleardevice();
+
+setcolor( 8 );
+//bar(200, 100, 800, 700); // cuadrado blanc
+
+// Barras verticales
+setcolor( 4 );
+bar(200,100,210,700);
+bar(400,100,410,700);
+bar(600,100,610,700);
+bar(800,100,810,710);
+// Barras horizontales
+bar(200,100,800,110);
+bar(200,300,800,310);
+bar(200,500,800,510);
+bar(200,700,800,710);
+
+if(sociedad == true){
+
+        int comprobar = 0;
+
+            for(int i = 0; i<9; i ++){
+                if(pos[i] == false)
+                    comprobar++;
+            }
+            if(comprobar == 9){
+                return;
+            }
+
+    cout<<"TU VAS, HUMANO"<<endl;
+        do{
+    tirarH();
+    reglas();
+    tirarM();
+}while(reglas()!=1);
+
+}else {
+cout<<"BIEN VOY YO"<<endl;
+ do{
+    tirarM();
+    reglas();
+    tirarH();
+}while(reglas()!=1);
+}
+
+char jajaja ;
+do{
+    jajaja = getch();
+
+}while(jajaja != 'a');   // el jaja espara esperar un A para volver a inicar el juego
+//getch();
+}
+
+int main(){
+    //--------------
+    char m;
+    bool p;
+    //-------------
+do{
+
+//vector<bool> pos(9,false);
+
+//int matriz[3][3] = {-1};
+for(int i = 0; i < 9; i++){
+    pos[i] = false;
+}
+
+for (int i = 0; i < 3 ; i ++){
+    for(int j = 0; j < 3; j++){
+        matriz[i][j] = -1;
+    }
+}
+
+
+closegraph();
+inicio();
+cout<<"BIENVENIDO A JUEGO DEL RATON: "<<endl;
+cout<<"Para jugar escribe 0 "<<endl;
+
+m = getch();
+closegraph();
+bool sociedad = dados();
+closegraph();
+initwindow(1000,800,"Imagenes",500,200);
+/*
+switch('m'){
+case 0:
+    p = true;
+    break;
+default:
+    p=false;
+    break;
+}
+if(p = true){
+
+juego(sociedad);
+
+}
+*/
+
+juego(sociedad);
+}while(true);
+
+getch();
+}
