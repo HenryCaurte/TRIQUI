@@ -391,7 +391,69 @@ void tirarH(){   ///////////Tirar humano
 
 int tirarM(){  // Tirar maquina
 int aux = 0;
+int pensar = 0; // piensa ñejeje
 srand(time(NULL));
+//necesito que analise los que estan puestos
+for(int j = 0; j< 9; j++){
+for(int i = 0; i < 9 ; i++){ // verifica cada uno y pone un circulo para cuando cumple con que falte un solo circulo
+    if(matriz[i][j] == 2){   // analiza las filas
+            pensar++;
+    }
+    if(pensar == 2 && pos[i+1] == false){
+        if(j == 0){
+            turnoM(i+1);
+            return i+1;
+        }
+        if(j == 1){
+            turnoM(i+1+2);
+            return i+1+2;
+        }
+        if(j == 2){
+            turnoM(i+2+1);
+            return i+1+2;
+        }
+    }
+    else{
+        break;
+    }
+
+    if(i==2 || i == 5){
+        pensar = 0;
+    }
+
+}
+}
+//////////////////////////////////////////// columnas
+for(int i = 0; i< 3; i++){
+for(int j = 0; j < 3; j++){ // verifica cada uno y pone un circulo para cuando cumple con que falte un solo circulo
+    if(matriz[i][j] == 2){   // analiza las filas
+            pensar++;
+    }
+    if(pensar == 2 && pos[i+j] == false){
+        if(j == 0){
+            turnoM(i+1);
+            return i+1;
+        }
+        if(j == 1){
+            turnoM(i+1+j);
+            return i+1+j;
+        }
+        if(j == 2){
+            turnoM(i+j);
+            return i+j;
+        }
+    }
+    else{
+        break;
+    }
+
+    if(i==2 || i == 5){
+        pensar = 0;
+    }
+
+}
+}
+//
     do{      // verifica si esta o no ocupado
     aux =rand()%8+1;
 
@@ -433,7 +495,7 @@ if(sociedad == true){
                 return;
             }
 
-    cout<<"TU VAS, HUMANO"<<endl;
+cout<<"TU VAS, HUMANO"<<endl;
         do{
     tirarH();
     reglas();
@@ -450,6 +512,7 @@ cout<<"BIEN VOY YO"<<endl;
 }
 
 char jajaja ;
+
 do{
     jajaja = getch();
 
@@ -482,27 +545,11 @@ closegraph();
 inicio();
 cout<<"BIENVENIDO A JUEGO DEL RATON: "<<endl;
 cout<<"Para jugar escribe 0 "<<endl;
-
-m = getch();
+getch();
 closegraph();
 bool sociedad = dados();
 closegraph();
-initwindow(1000,800,"Imagenes",500,200);
-/*
-switch('m'){
-case 0:
-    p = true;
-    break;
-default:
-    p=false;
-    break;
-}
-if(p = true){
-
-juego(sociedad);
-
-}
-*/
+initwindow(1000,800,"JUEGO",500,200);
 
 juego(sociedad);
 }while(true);
