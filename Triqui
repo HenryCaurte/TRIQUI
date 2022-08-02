@@ -200,6 +200,14 @@ caras(a,100,200);
 cout<<" El Segundo dado es : "<<endl;
 srand(time(0));
 a2 = rand()%6 +1;
+if(a2==a){
+    if(a2<6){
+        a2++;
+    }
+    else{
+    a2--;
+    }
+}
 caras(a2,600,200);
 
 if(a> a2){
