@@ -1,18 +1,16 @@
 #include <conio.h>
 #include <graphics.h>
 #include <iostream>
-#include <windows.h>
 #include <vector>
 #include <cstdlib>
 #include<time.h>
-//#include <bits/stdc++.h>
 
 using namespace std;
 
 vector<bool> pos(9,false);
 
 int matriz[3][3] = {-1};
-
+/*
 void interactuar(char r){
 cleardevice();
     switch(r){
@@ -21,29 +19,21 @@ cleardevice();
     default:
     break;
     }
-}
+}*/
 //----------------------------------------------------------------------------------------------
 void ganoelmejor(bool a){
     closegraph();
 /////////////////
 initwindow(1150,600,"GANADOR",500,200);
 setbkcolor(COLOR(100,399,152));
-
 cleardevice();
-
-
-
 if(a == true){
 readimagefile("Imagenes/elmejor.jpg",0,0,1150,600); // colocar imagen
 //readimagefile("Imagenes/denuevo.jpg",775,400,400,200);
-
 }
-
 else if (a == false){
 readimagefile("Imagenes/GANE.jpg",0,0,1150,600); // colocar imagen
-
 }
-
 }
 
 void inicio(){
@@ -116,6 +106,7 @@ return 1;
     contvmachine = 0;
     conthmachine = 0;
  }
+ return 0;
 }
 //////////////////////////////////////////////////DADOS //////////////////
 
@@ -192,34 +183,37 @@ readimagefile("Imagenes/dado.jpg",0,0,1000,600);
 
 cout<<"Listo para tirar los dados? Presiona alguna tecla para empezar por el tuyo ... "<<endl;
 cout<<"Si quedamos empatados yo gano porque soy local"<<endl;
-r = getch();
+getch();
+
 delay(15);
 cout<<" El primer dado salio : "<<endl;
 a = rand()%6 +1;
 caras(a,100,200);
 cout<<" El Segundo dado es : "<<endl;
-srand(time(0));
 a2 = rand()%6 +1;
-if(a2==a){
-    if(a2<6){
-        a2++;
+if(a == a2){
+    if(a<6){
+        a+1;
     }
     else{
-    a2--;
+        a-1;
     }
 }
+
 caras(a2,600,200);
 
 if(a> a2){
+        closegraph();
 return true;  //true humano
-closegraph();
+
 }
 else{
+        closegraph();
     return false;  // false maquina porque es falsa
-closegraph();
+
 }
 
-return true;
+return 0;
 }
 
 
@@ -378,7 +372,7 @@ case '9':
     aux = 9;
 break;
 default:
-
+    return NULL;
 break;
 }
 return aux;
@@ -401,70 +395,13 @@ void tirarH(){   ///////////Tirar humano
 int tirarM(){  // Tirar maquina
 int aux = 0;
 int pensar = 0; // piensa ñejeje
+int contador = 0; //contada cuantos cuadros quedan disponibles
 srand(time(NULL));
+
 //necesito que analise los que estan puestos
-for(int j = 0; j< 9; j++){
-for(int i = 0; i < 9 ; i++){ // verifica cada uno y pone un circulo para cuando cumple con que falte un solo circulo
-    if(matriz[i][j] == 2){   // analiza las filas
-            pensar++;
-    }
-    if(pensar == 2 && pos[i+1] == false){
-        if(j == 0){
-            turnoM(i+1);
-            return i+1;
-        }
-        if(j == 1){
-            turnoM(i+1+2);
-            return i+1+2;
-        }
-        if(j == 2){
-            turnoM(i+2+1);
-            return i+1+2;
-        }
-    }
-    else{
-        break;
-    }
 
-    if(i==2 || i == 5){
-        pensar = 0;
-    }
-
-}
-}
-//////////////////////////////////////////// columnas
-for(int i = 0; i< 3; i++){
-for(int j = 0; j < 3; j++){ // verifica cada uno y pone un circulo para cuando cumple con que falte un solo circulo
-    if(matriz[i][j] == 2){   // analiza las filas
-            pensar++;
-    }
-    if(pensar == 2 && pos[i+j] == false){
-        if(j == 0){
-            turnoM(i+1);
-            return i+1;
-        }
-        if(j == 1){
-            turnoM(i+1+j);
-            return i+1+j;
-        }
-        if(j == 2){
-            turnoM(i+j);
-            return i+j;
-        }
-    }
-    else{
-        break;
-    }
-
-    if(i==2 || i == 5){
-        pensar = 0;
-    }
-
-}
-}
-//
     do{      // verifica si esta o no ocupado
-    aux =rand()%8+1;
+    aux =rand()%9+1;
 
     }while(pos[aux-1]==true);  //si estan usados se replantea otro numero random
          pos[aux-1]==true;
@@ -472,6 +409,7 @@ for(int j = 0; j < 3; j++){ // verifica cada uno y pone un circulo para cuando c
 
 return aux;
 }
+
 //////////////////////////////////////////////////////// INTERFAZ JUEGO ////////////////////////////////////
 void juego(bool sociedad){
 initwindow(1000,800,"JUEGO",500,200);
@@ -494,32 +432,31 @@ bar(200,500,800,510);
 bar(200,700,800,710);
 
 if(sociedad == true){
-
-        int comprobar = 0;
-
-            for(int i = 0; i<9; i ++){
-                if(pos[i] == false)
-                    comprobar++;
-            }
-            if(comprobar == 9){
-                return;
-            }
-
 cout<<"TU VAS, HUMANO"<<endl;
         do{
     tirarH();
     reglas();
     tirarM();
-}while(reglas()!=1);
+
+if(reglas() == 1){
+        break;
+    }
+}while(true);
 
 }else {
 cout<<"BIEN VOY YO"<<endl;
  do{
+    reglas();
     tirarM();
     reglas();
     tirarH();
-}while(reglas()!=1);
+if(reglas() == 1){
+break;
+    }
+
+}while(true);
 }
+
 
 char jajaja ;
 
@@ -529,6 +466,7 @@ do{
 }while(jajaja != 'a');   // el jaja espara esperar un A para volver a inicar el juego
 //getch();
 }
+
 
 int main(){
     //--------------
@@ -552,9 +490,11 @@ cout<<"Para jugar escribe 0 "<<endl;
 getch();
 closegraph();
 bool sociedad = dados();
-closegraph();
+//closegraph();
 juego(sociedad);
+getch();
 
+//error se reinicia en humano
 }while(true);
 
 getch();
