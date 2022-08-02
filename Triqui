@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include<time.h>
-
+//CAMBIAR NOMBRE DE DADO1 A DADO
 using namespace std;
 
 vector<bool> pos(9,false);
