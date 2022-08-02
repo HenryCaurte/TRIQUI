@@ -211,6 +211,7 @@ else{
 closegraph();
 }
 
+return true;
 }
 
 
@@ -465,6 +466,7 @@ return aux;
 }
 //////////////////////////////////////////////////////// INTERFAZ JUEGO ////////////////////////////////////
 void juego(bool sociedad){
+initwindow(1000,800,"JUEGO",500,200);
 setbkcolor(4);
 cleardevice();
 
@@ -526,10 +528,6 @@ int main(){
     bool p;
     //-------------
 do{
-
-//vector<bool> pos(9,false);
-
-//int matriz[3][3] = {-1};
 for(int i = 0; i < 9; i++){
     pos[i] = false;
 }
@@ -539,8 +537,6 @@ for (int i = 0; i < 3 ; i ++){
         matriz[i][j] = -1;
     }
 }
-
-
 closegraph();
 inicio();
 cout<<"BIENVENIDO A JUEGO DEL RATON: "<<endl;
@@ -549,9 +545,8 @@ getch();
 closegraph();
 bool sociedad = dados();
 closegraph();
-initwindow(1000,800,"JUEGO",500,200);
-
 juego(sociedad);
+
 }while(true);
 
 getch();
