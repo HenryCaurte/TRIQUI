@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include<time.h>
-//CAMBIAR NOMBRE DE DADO1 A DADO
+
 using namespace std;
 
 vector<bool> pos(9,false);
@@ -12,18 +12,16 @@ vector<bool> pos(9,false);
 int matriz[3][3] = {-1};
 
 //----------------------------------------------------------------------------------------------
-void ganoelmejor(bool a){
+void ganoelmejor(int a){
 closegraph();
 initwindow(1150,600,"GANADOR",500,200);
 setbkcolor(COLOR(100,399,152));
 cleardevice();
-if(a == true){
+if(a == 1){
 readimagefile("Imagenes/elmejor.jpg",0,0,1150,600); // colocar imagen
-getch();
 }
 else{
 readimagefile("Imagenes/GANE.jpg",0,0,1150,600); // colocar imagen
-getch();
 }
 }
 
@@ -38,7 +36,6 @@ readimagefile("Imagenes/1.jpg",0,0,1150,600);
 int reglas(){ // reglas de la vida y de la muerte de triqui �ejeje
 int contv = 0; // contador verticals
 int conth= 0; // contador horizonatal
-
 int contvmachine = 0; // contador verticals maquina
 int conthmachine = 0; // contador horizonatal maquina
 
@@ -46,16 +43,16 @@ int conthmachine = 0; // contador horizonatal maquina
 
         // esto evalua las diagonales
     if(((matriz[2][0] == 2 && matriz[1][1] == 2 && matriz[0][2] == 2) || (matriz[0][0] == 2 && matriz[1][1] == 2 && matriz[2][2] == 2))){
-   cout<<"GANASTE , GENIAL"<<endl;
+//gano humano
   ganoelmejor(true);
     return 1;
-   break;
+  // break;
     }
     if(((matriz[2][0] == 1 && matriz[1][1] == 1 && matriz[0][2] == 1) || (matriz[0][0] == 1 && matriz[1][1] == 1 && matriz[2][2] == 1))){
-    cout<<"GANE YO , MAS SUERTE A LA PROXIMA"<<endl;
+//gano maquina
     ganoelmejor(false);
-    return 1;
-break;
+    return 2;
+//break;
     }
 
     for(int j  = 0; j <3; j++){
@@ -81,7 +78,7 @@ return 1;
         if(contvmachine == 3 ||  conthmachine == 3){ // cualquiera de las dos gana
     cout<<"GANE YO , MAS SUERTE A LA PROXIMA"<<endl;
     ganoelmejor(false);
-    return 1;
+    return 2;
 
         }
     }
@@ -430,11 +427,13 @@ case '9':
     aux = 9;
 break;
 default:
-    return NULL;
+    return 0;
 break;
 }
 return aux;
 }
+
+
 void tirarH(int n){   ///////////Tirar humano
     char r;
     cout<<"JUGADOR 1 TIRA: "<<endl;
@@ -448,6 +447,7 @@ void tirarH(int n){   ///////////Tirar humano
     }while(pos[ala-1]==true);
          pos[ala-1]==true;   /////para ocupar ya el espacio
          turno(ala,n); // lo lee
+         return;
 }
 
 int tirarM(){  // Tirar maquina
@@ -461,7 +461,7 @@ srand(time(NULL));
     do{      // verifica si esta o no ocupado
     aux =rand()%9+1;
 
-    }while(pos[aux-1]==true);  //si estan usados se replantea otro numero random
+    }while(pos[aux-1]);  //si estan usados se replantea otro numero random
          pos[aux-1]==true;
          turnoM(aux);
 
@@ -473,10 +473,7 @@ void juego(bool sociedad, int n){
 initwindow(1000,800,"JUEGO",500,200);
 setbkcolor(4);
 cleardevice();
-
-//setcolor( 8 ); // rojo
 readimagefile("Imagenes/Fondo.jpg",0,0,1000,800);
-//bar(200, 100, 800, 700); // cuadrado blanc
 
 // Barras verticales
 setcolor( 4 );
@@ -489,41 +486,53 @@ bar(200,100,800,110);
 bar(200,300,800,310);
 bar(200,500,800,510);
 bar(200,700,800,710);
-
+int cont = 0;
 if(sociedad == true){
-cout<<"TU VAS, HUMANO"<<endl;
         do{
     tirarH(n);
-    reglas();
+    if(reglas() == 1 || reglas()==2){
+        return;
+    }
     tirarM();
 
-if(reglas() == 1){
-        break;
+    for(bool i : pos){
+        if(i == true){
+            cont++;
+        }
     }
+    if(cont == 9){
+        return;
+    }
+
+if(reglas() == 1 || reglas()==2){
+        return;
+    }
+    cont == 0;
 }while(true);
 
 }else {
-cout<<"BIEN VOY YO"<<endl;
+//maquina
  do{
-    reglas();
     tirarM();
-    reglas();
+    if(reglas() == 1 || reglas()==2){
+        return;
+    }
     tirarH(n);
-if(reglas() == 1){
-break;
+    for(bool i : pos){
+        if(i == true){
+            cont++;
+        }
+    }
+    if(cont == 9){
+        return;
     }
 
+if(reglas() == 1 || reglas()==2){
+        return;
+    }
+    cont == 0;
 }while(true);
 }
-
-
-char jajaja ;
-
-do{
-    jajaja = getch();
-
-}while(jajaja != 'a');   // el jaja espara esperar un A para volver a inicar el juego
-//getch();
 }
 
 
@@ -539,19 +548,19 @@ for(int i = 0; i < 9; i++){
 
 for (int i = 0; i < 3 ; i ++){
     for(int j = 0; j < 3; j++){
-        matriz[i][j] = -1;
+        matriz[i][j] = -1; //cambiar  a 0 para humano 1 maquina -1 y sumarlos
     }
 }
 closegraph();
 inicio();
-cout<<"BIENVENIDO A JUEGO DEL RATON: "<<endl;
-cout<<"Para jugar escribe 0 "<<endl;
+//bienvenido
 getch();
 closegraph();
 bool sociedad = dados();
 int n = escoje();
 juego(sociedad,n);
 getch();
+ganoelmejor(reglas());
 
 //error se reinicia en humano
 }while(true);
