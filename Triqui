@@ -2,7 +2,6 @@
 #include <graphics.h>
 #include <iostream>
 #include <vector>
-#include <cstdlib>
 #include<time.h>
 
 using namespace std;
@@ -44,12 +43,14 @@ int conthmachine = 0; // contador horizonatal maquina
         // esto evalua las diagonales
     if(((matriz[2][0] == 2 && matriz[1][1] == 2 && matriz[0][2] == 2) || (matriz[0][0] == 2 && matriz[1][1] == 2 && matriz[2][2] == 2))){
 //gano humano
+getch();
   ganoelmejor(true);
     return 1;
   // break;
     }
     if(((matriz[2][0] == 1 && matriz[1][1] == 1 && matriz[0][2] == 1) || (matriz[0][0] == 1 && matriz[1][1] == 1 && matriz[2][2] == 1))){
 //gano maquina
+getch();
     ganoelmejor(false);
     return 2;
 //break;
@@ -72,11 +73,13 @@ int conthmachine = 0; // contador horizonatal maquina
         ////////////////EVALUA GANADOR ///////////////////
         if(contv == 3 ||  conth == 3){ // cualquiera de las dos gana
    cout<<"GANASTE , GENIAL"<<endl;
+   getch();
 ganoelmejor(true);
 return 1;
         }
         if(contvmachine == 3 ||  conthmachine == 3){ // cualquiera de las dos gana
     cout<<"GANE YO , MAS SUERTE A LA PROXIMA"<<endl;
+    getch();
     ganoelmejor(false);
     return 2;
 
@@ -219,7 +222,6 @@ void equis2(int x, int y){ // simbolo del pc -- Amarillo
    fillellipse( x, y, 80, 80 );
 
 }
-
 void equis(int x, int y){ // simbolo del pc -- VERDE
    int trama, color;
    trama = SOLID_FILL;
@@ -435,6 +437,16 @@ return aux;
 
 
 void tirarH(int n){   ///////////Tirar humano
+   /* for (int i = 0; i < 3 ; i ++){
+    for(int j = 0; j < 3; j++){
+       cout<<"|"<<matriz[j][i]<<"|";
+       if(j==2){
+        cout<<endl;
+       } //cambiar  a 0 para humano 1 maquina -1 y sumarlos
+    }
+}*/
+
+
     char r;
     cout<<"JUGADOR 1 TIRA: "<<endl;
     int ala;
@@ -454,9 +466,225 @@ int tirarM(){  // Tirar maquina
 int aux = 0;
 int pensar = 0; // piensa ñejeje
 int contador = 0; //contada cuantos cuadros quedan disponibles
+int contador2 = 0;
 srand(time(NULL));
+/// DENEGAR HUMANO
+for(int i =0; i <3 ; i++){
+    for(int j = 0; j < 3 ; j++){
 
-//necesito que analise los que estan puestos
+        if(matriz[j][i] == 2){
+            contador++;
+        }
+        if(matriz[i][j] == 2){
+            contador2++;
+        }
+        if(contador2 == 2){
+switch(i){
+
+case 0:
+    if(matriz[i][0]==-1 && pos[0] == false){
+        turnoM(1);
+        return 1;
+    }
+        if(matriz[i][1]==-1 && pos[3] == false){
+        turnoM(4);
+        return 4;
+    }
+        if(matriz[i][2]==-1 && pos[6] == false){
+        turnoM(7);
+        return 7;
+    }
+break;
+case 1:
+    if(matriz[i][0]==-1 && pos[1] == false){
+        turnoM(2);
+        return 2;
+    }
+        if(matriz[i][1]==-1 && pos[4] == false){
+        turnoM(5);
+        return 5;
+    }
+        if(matriz[i][2]==-1 && pos[7] == false){
+        turnoM(8);
+        return 8;
+    }
+break;
+case 2:
+    if(matriz[i][0]==-1 && pos[2] == false){
+        turnoM(3);
+        return 3;
+    }
+        if(matriz[i][1]==-1 && pos[5] == false){
+        turnoM(6);
+        return 6;
+    }
+        if(matriz[i][2]==-1 && pos[8] == false){
+        turnoM(9);
+        return 9;
+    }
+break;
+}
+}////////////////////////
+if(contador == 2){
+switch(i){
+
+case 0:
+    if(matriz[0][i]==-1 && pos[0] == false){
+        turnoM(1);
+        return 1;
+    }
+        if(matriz[1][i]==-1 && pos[1] == false){
+        turnoM(2);
+        return 2;
+    }
+        if(matriz[2][i]==-1 && pos[2] == false){
+        turnoM(3);
+        return 3;
+    }
+break;
+case 1:
+    if(matriz[0][i]==-1 && pos[3] == false){
+        turnoM(4);
+        return 4;
+    }
+        if(matriz[1][i]==-1 && pos[4] == false){
+        turnoM(5);
+        return 5;
+    }
+        if(matriz[2][i]==-1 && pos[5] == false){
+        turnoM(6);
+        return 6;
+    }
+break;
+case 2:
+    if(matriz[0][i]==-1 && pos[6] == false){
+        turnoM(7);
+        return 7;
+    }
+        if(matriz[1][i]==-1 && pos[7] == false){
+        turnoM(8);
+        return 8;
+    }
+        if(matriz[2][i]==-1 && pos[8] == false){
+        turnoM(9);
+        return 9;
+    }
+break;
+}
+}
+    }
+    contador=0;
+}
+
+//piensa para la maquinamuchos if porque no pude asociar por medio de la i y j :/
+for(int i =0; i <3 ; i++){
+    for(int j = 0; j < 3 ; j++){
+
+        if(matriz[j][i] == 1){
+            contador++;
+        }
+        if(matriz[i][j] == 1){
+            contador2++;
+        }
+        if(contador2 == 2){
+switch(i){
+
+case 0:
+    if(matriz[i][0]==-1 && pos[0] == false){
+        turnoM(1);
+        return 1;
+    }
+        if(matriz[i][1]==-1 && pos[3] == false){
+        turnoM(4);
+        return 4;
+    }
+        if(matriz[i][2]==-1 && pos[6] == false){
+        turnoM(7);
+        return 7;
+    }
+break;
+case 1:
+    if(matriz[i][0]==-1 && pos[1] == false){
+        turnoM(2);
+        return 2;
+    }
+        if(matriz[i][1]==-1 && pos[4] == false){
+        turnoM(5);
+        return 5;
+    }
+        if(matriz[i][2]==-1 && pos[7] == false){
+        turnoM(8);
+        return 8;
+    }
+break;
+case 2:
+    if(matriz[i][0]==-1 && pos[2] == false){
+        turnoM(3);
+        return 3;
+    }
+        if(matriz[i][1]==-1 && pos[5] == false){
+        turnoM(6);
+        return 6;
+    }
+        if(matriz[i][2]==-1 && pos[8] == false){
+        turnoM(9);
+        return 9;
+    }
+break;
+}
+}////////////////////////
+if(contador == 2){
+switch(i){
+
+case 0:
+    if(matriz[0][i]==-1 && pos[0] == false){
+        turnoM(1);
+        return 1;
+    }
+        if(matriz[1][i]==-1 && pos[1] == false){
+        turnoM(2);
+        return 2;
+    }
+        if(matriz[2][i]==-1 && pos[2] == false){
+        turnoM(3);
+        return 3;
+    }
+break;
+case 1:
+    if(matriz[0][i]==-1 && pos[3] == false){
+        turnoM(4);
+        return 4;
+    }
+        if(matriz[1][i]==-1 && pos[4] == false){
+        turnoM(5);
+        return 5;
+    }
+        if(matriz[2][i]==-1 && pos[5] == false){
+        turnoM(6);
+        return 6;
+    }
+break;
+case 2:
+    if(matriz[0][i]==-1 && pos[6] == false){
+        turnoM(7);
+        return 7;
+    }
+        if(matriz[1][i]==-1 && pos[7] == false){
+        turnoM(8);
+        return 8;
+    }
+        if(matriz[2][i]==-1 && pos[8] == false){
+        turnoM(9);
+        return 9;
+    }
+break;
+}
+}
+    }
+    contador=0;
+}///////////////////////////////////////////////
+
+//pensar para que no gane humano
 
     do{      // verifica si esta o no ocupado
     aux =rand()%9+1;
@@ -562,8 +790,6 @@ juego(sociedad,n);
 getch();
 ganoelmejor(reglas());
 
-//error se reinicia en humano
 }while(true);
 
-getch();
 }
