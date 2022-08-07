@@ -437,14 +437,14 @@ return aux;
 
 
 void tirarH(int n){   ///////////Tirar humano
-   /* for (int i = 0; i < 3 ; i ++){
+    for (int i = 0; i < 3 ; i ++){
     for(int j = 0; j < 3; j++){
        cout<<"|"<<matriz[j][i]<<"|";
        if(j==2){
         cout<<endl;
        } //cambiar  a 0 para humano 1 maquina -1 y sumarlos
     }
-}*/
+}
 
 
     char r;
@@ -468,235 +468,271 @@ int pensar = 0; // piensa ñejeje
 int contador = 0; //contada cuantos cuadros quedan disponibles
 int contador2 = 0;
 srand(time(NULL));
+///Pensar para ganar
+for(int i =0; i <3 ; i++){
+    for(int j = 0; j < 3 ; j++){
+
+        if(matriz[j][i] == 1){ // izq a derecha
+            contador++;
+                cout<<" columnas: "<<contador<<endl;
+        }
+        if(matriz[i][j] == 1){ // arriba abajo   123/456/789
+            contador2++;
+                cout<<" filas: "<<contador2<<endl;
+        }
+
+    //////////////analizamos las horizontales.
+        if(contador == 2){   // analiza los contadores de las verticales
+    switch(i){ // analisamos la i
+    case 0:
+        if(matriz[0][i] == -1 ){
+            turnoM(1);
+            return 1;
+        }else if(matriz[1][i] == -1){
+            turnoM(2);
+            return 2;
+        }else if(matriz[2][i] == -1){
+            turnoM(3);
+            return 3;
+        }
+        else{break;}
+    break;
+        case 1:
+        if(matriz[0][i] == -1){
+            turnoM(4);
+            return 4;
+        }
+        else if(matriz[1][i] == -1 && !pos[6]){
+            turnoM(5);
+            return 5;
+        }
+        else if(matriz[2][i] == -1 ){
+            turnoM(6);
+            return 6;
+        }else{break;}
+    break;
+    case 2:
+        if(matriz[0][i] == -1 ){
+            turnoM(7);
+            return 7;
+        }
+        else if(matriz[1][i] == -1 ){
+            turnoM(8);
+            return 8;
+        }
+        else if(matriz[2][i] == -1){
+            turnoM(9);
+            return 9;
+        }else{break;}
+    break;
+            default:
+
+        break;
+
+    }
+
+    }
+
+    if(contador2 == 2){   // analiza los contadores de las verticales
+    switch(i){ // analisamos la i
+    case 0:
+        if(matriz[i][0] == -1 ){
+            turnoM(1);
+            return 1;
+        }
+        else if(matriz[i][1] == -1){
+            turnoM(4);
+            return 4;
+        }
+        else if(matriz[i][2] == -1 ){
+            turnoM(7);
+            return 7;
+        }else{break;}
+    break;
+        case 1:
+        if(matriz[i][0] == -1){
+            turnoM(2);
+            return 2;
+        }
+        /*else if(matriz[i][2] == -1){
+            turnoM(5);
+            return 5;
+        }*/
+        else if(matriz[i][2] == -1){
+            turnoM(8);
+            return 8;
+        }else{break;}
+    break;
+        case 2:
+        if(matriz[i][0] == -1){
+            turnoM(3);
+            return 3;
+        }
+        else if(matriz[i][1] == -1){
+            turnoM(6);
+            return 6;
+        }
+        else if(matriz[i][2] == -1){
+            turnoM(9);
+            return 9;
+        }else{break;}
+    break;
+        default:
+
+        break;
+
+    }
+    }
+}
+contador = 0;
+contador2 = 0;
+}
+
 /// DENEGAR HUMANO
 for(int i =0; i <3 ; i++){
     for(int j = 0; j < 3 ; j++){
 
-        if(matriz[j][i] == 2){
+        if(matriz[j][i] == 2){ // izq a derecha
             contador++;
+                cout<<" columnas: "<<contador<<endl;
         }
-        if(matriz[i][j] == 2){
+        if(matriz[i][j] == 2){ // arriba abajo   123/456/789
             contador2++;
+                cout<<" filas: "<<contador2<<endl;
         }
-        if(contador2 == 2){
-switch(i){
 
-case 0:
-    if(matriz[i][0]==-1 && pos[0] == false){
-        turnoM(1);
-        return 1;
-    }
-        if(matriz[i][1]==-1 && pos[3] == false){
-        turnoM(4);
-        return 4;
-    }
-        if(matriz[i][2]==-1 && pos[6] == false){
-        turnoM(7);
-        return 7;
-    }
-break;
-case 1:
-    if(matriz[i][0]==-1 && pos[1] == false){
-        turnoM(2);
-        return 2;
-    }
-        if(matriz[i][1]==-1 && pos[4] == false){
-        turnoM(5);
-        return 5;
-    }
-        if(matriz[i][2]==-1 && pos[7] == false){
-        turnoM(8);
-        return 8;
-    }
-break;
-case 2:
-    if(matriz[i][0]==-1 && pos[2] == false){
-        turnoM(3);
-        return 3;
-    }
-        if(matriz[i][1]==-1 && pos[5] == false){
-        turnoM(6);
-        return 6;
-    }
-        if(matriz[i][2]==-1 && pos[8] == false){
-        turnoM(9);
-        return 9;
-    }
-break;
-}
-}////////////////////////
-if(contador == 2){
-switch(i){
-
-case 0:
-    if(matriz[0][i]==-1 && pos[0] == false){
-        turnoM(1);
-        return 1;
-    }
-        if(matriz[1][i]==-1 && pos[1] == false){
-        turnoM(2);
-        return 2;
-    }
-        if(matriz[2][i]==-1 && pos[2] == false){
-        turnoM(3);
-        return 3;
-    }
-break;
-case 1:
-    if(matriz[0][i]==-1 && pos[3] == false){
-        turnoM(4);
-        return 4;
-    }
-        if(matriz[1][i]==-1 && pos[4] == false){
-        turnoM(5);
-        return 5;
-    }
-        if(matriz[2][i]==-1 && pos[5] == false){
-        turnoM(6);
-        return 6;
-    }
-break;
-case 2:
-    if(matriz[0][i]==-1 && pos[6] == false){
-        turnoM(7);
-        return 7;
-    }
-        if(matriz[1][i]==-1 && pos[7] == false){
-        turnoM(8);
-        return 8;
-    }
-        if(matriz[2][i]==-1 && pos[8] == false){
-        turnoM(9);
-        return 9;
-    }
-break;
-}
-}
-    }
-    contador=0;
-}
-
-//piensa para la maquinamuchos if porque no pude asociar por medio de la i y j :/
-for(int i =0; i <3 ; i++){
-    for(int j = 0; j < 3 ; j++){
-
-        if(matriz[j][i] == 1){
-            contador++;
+    //////////////analizamos las horizontales.
+        if(contador == 2){   // analiza los contadores de las verticales
+    switch(i){ // analisamos la i
+    case 0:
+        if(matriz[0][i] == -1 ){
+            turnoM(1);
+            return 1;
+        }else if(matriz[1][i] == -1){
+            turnoM(2);
+            return 2;
+        }else if(matriz[2][i] == -1){
+            turnoM(3);
+            return 3;
         }
-        if(matriz[i][j] == 1){
-            contador2++;
+        else{break;}
+    break;
+        case 1:
+        if(matriz[0][i] == -1){
+            turnoM(4);
+            return 4;
         }
-        if(contador2 == 2){
-switch(i){
+        else if(matriz[1][i] == -1 && !pos[6]){
+            turnoM(5);
+            return 5;
+        }
+        else if(matriz[2][i] == -1 ){
+            turnoM(6);
+            return 6;
+        }else{break;}
+    break;
+    case 2:
+        if(matriz[0][i] == -1 ){
+            turnoM(7);
+            return 7;
+        }
+        else if(matriz[1][i] == -1 ){
+            turnoM(8);
+            return 8;
+        }
+        else if(matriz[2][i] == -1){
+            turnoM(9);
+            return 9;
+        }else{break;}
+    break;
+            default:
 
-case 0:
-    if(matriz[i][0]==-1 && pos[0] == false){
-        turnoM(1);
-        return 1;
-    }
-        if(matriz[i][1]==-1 && pos[3] == false){
-        turnoM(4);
-        return 4;
-    }
-        if(matriz[i][2]==-1 && pos[6] == false){
-        turnoM(7);
-        return 7;
-    }
-break;
-case 1:
-    if(matriz[i][0]==-1 && pos[1] == false){
-        turnoM(2);
-        return 2;
-    }
-        if(matriz[i][1]==-1 && pos[4] == false){
-        turnoM(5);
-        return 5;
-    }
-        if(matriz[i][2]==-1 && pos[7] == false){
-        turnoM(8);
-        return 8;
-    }
-break;
-case 2:
-    if(matriz[i][0]==-1 && pos[2] == false){
-        turnoM(3);
-        return 3;
-    }
-        if(matriz[i][1]==-1 && pos[5] == false){
-        turnoM(6);
-        return 6;
-    }
-        if(matriz[i][2]==-1 && pos[8] == false){
-        turnoM(9);
-        return 9;
-    }
-break;
-}
-}////////////////////////
-if(contador == 2){
-switch(i){
+        break;
 
-case 0:
-    if(matriz[0][i]==-1 && pos[0] == false){
-        turnoM(1);
-        return 1;
     }
-        if(matriz[1][i]==-1 && pos[1] == false){
-        turnoM(2);
-        return 2;
-    }
-        if(matriz[2][i]==-1 && pos[2] == false){
-        turnoM(3);
-        return 3;
-    }
-break;
-case 1:
-    if(matriz[0][i]==-1 && pos[3] == false){
-        turnoM(4);
-        return 4;
-    }
-        if(matriz[1][i]==-1 && pos[4] == false){
-        turnoM(5);
-        return 5;
-    }
-        if(matriz[2][i]==-1 && pos[5] == false){
-        turnoM(6);
-        return 6;
-    }
-break;
-case 2:
-    if(matriz[0][i]==-1 && pos[6] == false){
-        turnoM(7);
-        return 7;
-    }
-        if(matriz[1][i]==-1 && pos[7] == false){
-        turnoM(8);
-        return 8;
-    }
-        if(matriz[2][i]==-1 && pos[8] == false){
-        turnoM(9);
-        return 9;
-    }
-break;
-}
-}
-    }
-    contador=0;
-}///////////////////////////////////////////////
 
-//pensar para que no gane humano
+    }
+
+    if(contador2 == 2){   // analiza los contadores de las verticales
+    switch(i){ // analisamos la i
+    case 0:
+        if(matriz[i][0] == -1 ){
+            turnoM(1);
+            return 1;
+        }
+        else if(matriz[i][1] == -1){
+            turnoM(4);
+            return 4;
+        }
+        else if(matriz[i][2] == -1 ){
+            turnoM(7);
+            return 7;
+        }else{break;}
+    break;
+        case 1:
+        if(matriz[i][0] == -1){
+            turnoM(2);
+            return 2;
+        }
+        /*else if(matriz[i][2] == -1){
+            turnoM(5);
+            return 5;
+        }*/
+        else if(matriz[i][2] == -1){
+            turnoM(8);
+            return 8;
+        }else{break;}
+    break;
+        case 2:
+        if(matriz[i][0] == -1){
+            turnoM(3);
+            return 3;
+        }
+        else if(matriz[i][1] == -1){
+            turnoM(6);
+            return 6;
+        }
+        else if(matriz[i][2] == -1){
+            turnoM(9);
+            return 9;
+        }else{break;}
+    break;
+        default:
+
+        break;
+
+    }
+    }
+}
+contador = 0;
+contador2 = 0;
+}
+
+///////////////////////////////////////////////
 
     do{      // verifica si esta o no ocupado
     aux =rand()%9+1;
 
     }while(pos[aux-1]);  //si estan usados se replantea otro numero random
-         pos[aux-1]==true;
          turnoM(aux);
 
 return aux;
 }
 
 //////////////////////////////////////////////////////// INTERFAZ JUEGO ////////////////////////////////////
+bool analisis(){
+    int cont  = 0;
+    for(int i = 0 ; i <9; i++){
+        if(pos[i] == true){
+            cont++;
+        }
+    }
+    if(cont == 9){
+        return false;
+    }
+    return true;
+}
+
 void juego(bool sociedad, int n){
 initwindow(1000,800,"JUEGO",500,200);
 setbkcolor(4);
@@ -718,47 +754,26 @@ int cont = 0;
 if(sociedad == true){
         do{
     tirarH(n);
-    if(reglas() == 1 || reglas()==2){
+    if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
     }
     tirarM();
-
-    for(bool i : pos){
-        if(i == true){
-            cont++;
-        }
-    }
-    if(cont == 9){
+if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
     }
-
-if(reglas() == 1 || reglas()==2){
-        return;
-    }
-    cont == 0;
 }while(true);
 
 }else {
 //maquina
  do{
     tirarM();
-    if(reglas() == 1 || reglas()==2){
+    if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
     }
     tirarH(n);
-    for(bool i : pos){
-        if(i == true){
-            cont++;
-        }
-    }
-    if(cont == 9){
+if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
     }
-
-if(reglas() == 1 || reglas()==2){
-        return;
-    }
-    cont == 0;
 }while(true);
 }
 }
