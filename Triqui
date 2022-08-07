@@ -9,7 +9,20 @@ using namespace std;
 vector<bool> pos(9,false);
 
 int matriz[3][3] = {-1};
+//** analiza si esta lleno o no
+bool analisis(){
+    int cont  = 0;
+    for(int i = 0 ; i <9; i++){
+        if(pos[i] == true){
+            cont++;
+        }
+    }
+    if(cont == 9){
+        return false;
+    }
 
+    return true;
+}
 //----------------------------------------------------------------------------------------------
 void ganoelmejor(int a){
 closegraph();
@@ -19,8 +32,11 @@ cleardevice();
 if(a == 1){
 readimagefile("Imagenes/elmejor.jpg",0,0,1150,600); // colocar imagen
 }
-else{
+else if(a ==2 ){
 readimagefile("Imagenes/GANE.jpg",0,0,1150,600); // colocar imagen
+}
+else{
+readimagefile("Imagenes/empate.jpg",0,0,1150,600);
 }
 }
 
@@ -43,15 +59,15 @@ int conthmachine = 0; // contador horizonatal maquina
         // esto evalua las diagonales
     if(((matriz[2][0] == 2 && matriz[1][1] == 2 && matriz[0][2] == 2) || (matriz[0][0] == 2 && matriz[1][1] == 2 && matriz[2][2] == 2))){
 //gano humano
-getch();
-  ganoelmejor(true);
+  ganoelmejor(1);
+  getch();
     return 1;
   // break;
     }
     if(((matriz[2][0] == 1 && matriz[1][1] == 1 && matriz[0][2] == 1) || (matriz[0][0] == 1 && matriz[1][1] == 1 && matriz[2][2] == 1))){
 //gano maquina
-getch();
-    ganoelmejor(false);
+    ganoelmejor(2);
+    getch();
     return 2;
 //break;
     }
@@ -73,14 +89,14 @@ getch();
         ////////////////EVALUA GANADOR ///////////////////
         if(contv == 3 ||  conth == 3){ // cualquiera de las dos gana
    cout<<"GANASTE , GENIAL"<<endl;
-   getch();
-ganoelmejor(true);
+ganoelmejor(1);
+getch();
 return 1;
         }
         if(contvmachine == 3 ||  conthmachine == 3){ // cualquiera de las dos gana
     cout<<"GANE YO , MAS SUERTE A LA PROXIMA"<<endl;
+    ganoelmejor(2);
     getch();
-    ganoelmejor(false);
     return 2;
 
         }
@@ -90,7 +106,11 @@ return 1;
     contvmachine = 0;
     conthmachine = 0;
  }
- return 0;
+if(!analisis()){
+    ganoelmejor(3);
+    getch();
+}
+ return 3;
 }
 //////////////////////////////////////////////////DADOS //////////////////
 
@@ -201,7 +221,7 @@ if(ismouseclick(WM_LBUTTONDOWN)){ // para presionar el boton
     }
 }
 }while(pete!=1);
-getch();
+//getch();
 return 0;
 }
 
@@ -589,6 +609,11 @@ contador2 = 0;
 }
 
 /// DENEGAR HUMANO
+for(int i = 0; i <3; i ++){
+    int p = 0;
+
+}
+
 for(int i =0; i <3 ; i++){
     for(int j = 0; j < 3 ; j++){
 
@@ -720,18 +745,6 @@ return aux;
 }
 
 //////////////////////////////////////////////////////// INTERFAZ JUEGO ////////////////////////////////////
-bool analisis(){
-    int cont  = 0;
-    for(int i = 0 ; i <9; i++){
-        if(pos[i] == true){
-            cont++;
-        }
-    }
-    if(cont == 9){
-        return false;
-    }
-    return true;
-}
 
 void juego(bool sociedad, int n){
 initwindow(1000,800,"JUEGO",500,200);
@@ -754,7 +767,7 @@ int cont = 0;
 if(sociedad == true){
         do{
     tirarH(n);
-    if(reglas() == 1 || reglas()==2 || !analisis()){
+if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
     }
     tirarM();
@@ -802,8 +815,8 @@ closegraph();
 bool sociedad = dados();
 int n = escoje();
 juego(sociedad,n);
-getch();
-ganoelmejor(reglas());
+//getch();
+//ganoelmejor(reglas());
 
 }while(true);
 
