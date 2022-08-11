@@ -1,4 +1,5 @@
 #include <conio.h>
+#include <stdlib.h>
 #include <graphics.h>
 #include <iostream>
 #include <vector>
@@ -779,6 +780,7 @@ if(sociedad == true){
 if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
     }
+    Sleep(1000);
     tirarM();
 if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
@@ -788,6 +790,7 @@ if(reglas() == 1 || reglas()==2 || !analisis()){
 }else {
 //maquina
  do{
+    Sleep(1000);
     tirarM();
     if(reglas() == 1 || reglas()==2 || !analisis()){
         return;
