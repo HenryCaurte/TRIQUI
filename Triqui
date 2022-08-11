@@ -463,7 +463,7 @@ void tirarH(int n){   ///////////Tirar humano
     char r;
     int ala;
     do{
-    r = getch();
+    do{    r = getch();}while(r<49 || r>57);
     ala = teclado(r);
       // lee la posicion// verifica si esta o no ocupado
 
